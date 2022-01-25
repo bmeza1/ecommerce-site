@@ -126,6 +126,7 @@ a:hover{
 
 .sidebar{
   position: fixed;
+  transition: all .5s;
   transform: translateX(-30rem);
   width: 30rem; /*transform and width keep the sidebar out of the screen*/
   background-color: floralwhite;

@@ -1,13 +1,26 @@
-import logo from './logo.svg';
+import data from "./data";
 import './App.css';
+import ProductScreen from "./Screens/ProductScreen";
+import HomeScreen from "./Screens/HomeScreen";
+import {BrowserRouter, Route} from "react-router-dom";
 
 function App() {
+
+  const openMenu = () =>{
+    document.querySelector(".sidebar").classList.add("open");
+  }
+
+  const closeMenu = () =>{
+    document.querySelector(".sidebar").classList.remove("open")
+  }
+
   return (
+      <BrowserRouter>
       <div className="grid-container">
 
         <header className="header">
           <div className="brand">
-            <button onClick="openMenu()">
+            <button onClick={openMenu}>
               &#9776;
             </button>
             <a href="index.html">Brandi's Closet</a>
@@ -20,7 +33,7 @@ function App() {
 
         <aside className="sidebar">
           <h3>Shopping Categories</h3>
-          <button className="sidebar-close-button" onClick="closeMenu()">x</button>
+          <button className="sidebar-close-button" onClick={closeMenu}>x</button>
           <ul>
             <li>
               <a href="index.html">Tops</a>
@@ -35,51 +48,26 @@ function App() {
 
         <main className="main">
           <div className="content">
+
+            <Route path="/products/:id" component={ProductScreen} />
+            <Route path="/" exact={true} component={HomeScreen} />
+
             <ul className="products">
-              <li>
-                <div className="product">
-                  <img className="product-image" src="/images/booties.webp" alt="product"></img>
+              {
+                data.products.map(product =>
+                    <li>
+                  <div className="product">
+                    <img className="product-image" src={product.image} alt="product"></img>
                     <div className="product-name">
-                      <a href="product.html">Beige Booties</a>
+                      <a href="product.html">{product.name}</a>
                     </div>
-                    <div className="product-brand">DSW</div>
-                    <div className="product-price">$80</div>
-                    <div className="product-rating">4.5 Stars (2 Reviews)</div>
-                </div>
-              </li>
-              <li>
-                <div className="product">
-                  <img className="product-image" src="/images/booties.webp" alt="product"></img>
-                    <div className="product-name">
-                      <a href="product.html">Beige Booties</a>
-                    </div>
-                    <div className="product-brand">DSW</div>
-                    <div className="product-price">$80</div>
-                    <div className="product-rating">4.5 Stars (2 Reviews)</div>
-                </div>
-              </li>
-              <li>
-                <div className="product">
-                  <img className="product-image" src="/images/booties.webp" alt="product"></img>
-                    <div className="product-name">
-                      <a href="product.html">Beige Booties</a>
-                    </div>
-                    <div className="product-brand">DSW</div>
-                    <div className="product-price">$80</div>
-                    <div className="product-rating">4.5 Stars (2 Reviews)</div>
-                </div>
-              </li>
-              <li>
-                <div className="product">
-                  <img className="product-image" src="/images/booties.webp" alt="product"></img>
-                    <div className="product-name">
-                      <a href="product.html">Beige Booties</a>
-                    </div>
-                    <div className="product-brand">DSW</div>
-                    <div className="product-price">$80</div>
-                    <div className="product-rating">4.5 Stars (2 Reviews)</div>
-                </div>
-              </li>
+                    <div className="product-brand">{product.brand}</div>
+                    <div className="product-price">{product.price}</div>
+                    <div className="product-rating">{product.rating} Stars {product.numReviews}</div>
+                  </div>
+                </li>)
+              }
+
             </ul>
           </div>
         </main>
@@ -87,6 +75,7 @@ function App() {
           All right reserved. Site created by Brandi Meza
         </footer>
       </div>
+      </BrowserRouter>
   );
 }
 
